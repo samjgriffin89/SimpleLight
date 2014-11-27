@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SimpleLight</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="toggleButtonDesc">Toggles the flashlight</string>
+    <string name="permissionLabel_flashlight">flashlight_permission</string>
+    <string name="permissionDesc_flashlight">This app requires the use of the LED on your phone.</string>
+</resources>
