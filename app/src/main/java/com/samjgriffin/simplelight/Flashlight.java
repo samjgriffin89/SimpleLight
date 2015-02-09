@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,8 +27,13 @@ public class Flashlight extends Activity implements View.OnClickListener {
         toggleLightBtn.setOnClickListener(this);
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            cam = Camera.open();
-            hasCam = true;
+            try {
+                cam = Camera.open();
+                hasCam = true;
+            }
+            catch (RuntimeException ex) {
+                Log.d("CameraOpen", "Error opening camera: " + ex.getMessage());
+            }
         }
         else {
             TextView noLED = (TextView)findViewById(R.id.noLED);
@@ -60,6 +66,14 @@ public class Flashlight extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if (cam == null) {
+            TextView noLED = (TextView)findViewById(R.id.noLED);
+            noLED.setText("Camera not found!");
+
+            ImageButton toggleLightBtn = (ImageButton) findViewById(R.id.toggleLightBtn);
+            toggleLightBtn.setVisibility(View.GONE);
+        }
+
         if (hasCam) {
             Parameters p = cam.getParameters();
             if (isOff) {
